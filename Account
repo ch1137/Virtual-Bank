@@ -1,0 +1,9 @@
+import numpy as np
+
+import Date_Calculations as dc
+import Checks
+
+
+def daily_interest(account_value, percent_APR, days_in_year):
+    dAPR = (1+(percent_APR/100))**(1 / days_in_year)
+    return account_value * (dAPR-1)
