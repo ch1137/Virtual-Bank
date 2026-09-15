@@ -83,9 +83,3 @@ def total_debit(open_date, *debits):                     #args in form [type, va
         total_transactions = list(map(sum,
                                       it.zip_longest(total_transactions, transactions,fillvalue=0)))
     return np.array(total_transactions).view(dtype=float)
-
-
-
-daily1 = ['daily', 10, '2026-01-02', '2026-01-07',1]
-daily2 = ['single', 10, '2026-01-03']
-print(total_debit('2026', daily1,daily2))
