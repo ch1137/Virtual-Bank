@@ -5,6 +5,11 @@ import Date_Calculations as dc
 import Checks
 
 
+def combine_transactions(transactions1, transactions2):
+    combined = list(map(sum, it.zip_longest(transactions1, transactions2,fillvalue=0)))
+    return combined
+
+
 def single_debit(value, date, end_date, open_date = 'start_date', frequency=1):
     if open_date == 'start_date':
         open_date = date
@@ -12,8 +17,8 @@ def single_debit(value, date, end_date, open_date = 'start_date', frequency=1):
     total_days = dc.number_of_days(start_date=open_date, end_date=date)
     transactions = np.zeros(total_days + 1)
     transactions[-1] = value
-
     return transactions
+
 
 def daily_debit(value, start_date, end_date, open_date = 'start_date', frequency=1):
     if open_date == 'start_date':
@@ -25,7 +30,6 @@ def daily_debit(value, start_date, end_date, open_date = 'start_date', frequency
 
     for index in range(start_day, total_days+1, frequency):
         transactions[index] = value
-
     return transactions
 
 
@@ -80,6 +84,5 @@ def total_debit(open_date, *debits):                     #args in form [type, va
 
         transactions = style[debit[0]](debit[1], debit[2], debit[3],
                                        open_date= open_date, frequency= debit[4])
-        total_transactions = list(map(sum,
-                                      it.zip_longest(total_transactions, transactions,fillvalue=0)))
+        total_transactions = combine_transactions(total_transactions, transactions)
     return np.array(total_transactions).view(dtype=float)
