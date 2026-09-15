@@ -35,7 +35,3 @@ def run_period(start_date, end_date, percent_APR, transactions):
             interest = 0
             year_days = dc.no_days_in_year(dc.day_step(start_date, day))
     return account_value
-
-trans = np.zeros(396)
-trans[0] = 100
-print(run_period('2026', '2027',8,trans))
